@@ -9,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
 class MoviesAdapter(
-        private var movies: List<Movie>
+    private var movies: MutableList<Movie>,
+    private val onMovieClick: (movie: Movie) -> Unit
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -26,7 +27,7 @@ class MoviesAdapter(
     }
 
     fun updateMovies(movies: List<Movie>) {
-        this.movies = movies
+        this.movies = movies as MutableList<Movie>
         notifyDataSetChanged()
     }
 
@@ -39,6 +40,7 @@ class MoviesAdapter(
                     .load("https://image.tmdb.org/t/p/w342${movie.posterPath}")
                     .transform(CenterCrop())
                     .into(poster)
+            itemView.setOnClickListener { onMovieClick.invoke(movie) }
         }
     }
 }
