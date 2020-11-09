@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,29 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var popularMovies: RecyclerView
     private lateinit var popularMoviesAdapter: MoviesAdapter
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here.
+        val id = item.getItemId()
+
+        if (id == R.id.action_two) {
+            Toast.makeText(this, "Item Two Clicked", Toast.LENGTH_LONG).show()
+            return true
+        }
+        if (id == R.id.action_three) {
+            Toast.makeText(this, "Item Three Clicked", Toast.LENGTH_LONG).show()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
