@@ -3,9 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_two"
-        android:title="Item Two"/>
+        android:id="@+id/ic_movie"
+        android:title="Films"
+        android:icon="@drawable/ic_movie"/>
     <item
-        android:id="@+id/action_three"
-        android:title="Item Three"/>
+        android:id="@+id/ic_settings"
+        android:title="Paramètres"
+        android:icon="@drawable/ic_baseline_settings_24"/>
 </menu>
