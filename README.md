@@ -8,7 +8,11 @@
  
  ## Page d'informations du film
  
- ## Page de Favoris
+ ![page d'infos](https://user-images.githubusercontent.com/57704705/99284529-a8301300-2836-11eb-9427-2bbed8c95a19.png)
+
  
  ## Page de paramètres
+ 
+ ![page de paramètres](https://user-images.githubusercontent.com/57704705/99284360-728b2a00-2836-11eb-9c88-42cc77f06a88.png)
+
    
