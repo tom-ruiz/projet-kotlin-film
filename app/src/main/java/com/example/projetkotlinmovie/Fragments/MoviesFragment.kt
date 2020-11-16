@@ -17,6 +17,14 @@ class MoviesFragment : Fragment() {
 
     private lateinit var popularMovies: RecyclerView
     private lateinit var popularMoviesAdapter: MoviesAdapter
+    private lateinit var popularMoviesLayoutMgr: LinearLayoutManager
+
+    private lateinit var topRatedMovies: RecyclerView
+    private lateinit var topRatedMoviesAdapter: MoviesAdapter
+    private lateinit var topRatedMoviesLayoutMgr: LinearLayoutManager
+
+    private var popularMoviesPage = 1
+    private var topRatedMoviesPage = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -28,18 +36,27 @@ class MoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         popularMovies = view.findViewById(R.id.popular_movies)
-        popularMovies.layoutManager = LinearLayoutManager(
+        popularMoviesLayoutMgr = LinearLayoutManager(
                 requireActivity(),
                 LinearLayoutManager.HORIZONTAL,
                 false
         )
+        popularMovies.layoutManager = popularMoviesLayoutMgr
         popularMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
         popularMovies.adapter = popularMoviesAdapter
 
-        MoviesRepository.getPopularMovies(
-                onSuccess = ::onPopularMoviesFetched,
-                onError = ::onError
+        topRatedMovies = view.findViewById(R.id.top_rated_movies)
+        topRatedMoviesLayoutMgr = LinearLayoutManager(
+                requireActivity(),
+                LinearLayoutManager.HORIZONTAL,
+                false
         )
+        topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
+        topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        topRatedMovies.adapter = topRatedMoviesAdapter
+
+        getPopularMovies()
+        getTopRatedMovies()
     }
 
     private fun showMovieDetails(movie: Movie) {
@@ -56,7 +73,61 @@ class MoviesFragment : Fragment() {
     }
 
     private fun onPopularMoviesFetched(movies: List<Movie>) {
-        popularMoviesAdapter.updateMovies(movies)
+        popularMoviesAdapter.appendMovies(movies)
+        attachPopularMoviesOnScrollListener()
+    }
+
+    private fun attachPopularMoviesOnScrollListener() {
+        popularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = popularMoviesLayoutMgr.itemCount
+                val visibleItemCount = popularMoviesLayoutMgr.childCount
+                val firstVisibleItem = popularMoviesLayoutMgr.findFirstVisibleItemPosition()
+
+                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
+                    popularMoviesPage++
+                    popularMovies.removeOnScrollListener(this)
+                    getPopularMovies()
+                }
+            }
+        })
+    }
+
+    private fun getPopularMovies() {
+        MoviesRepository.getPopularMovies(
+                popularMoviesPage,
+                ::onPopularMoviesFetched,
+                ::onError
+        )
+    }
+
+    private fun getTopRatedMovies() {
+        MoviesRepository.getTopRatedMovies(
+                topRatedMoviesPage,
+                ::onTopRatedMoviesFetched,
+                ::onError
+        )
+    }
+
+    private fun attachTopRatedMoviesOnScrollListener() {
+        topRatedMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = topRatedMoviesLayoutMgr.itemCount
+                val visibleItemCount = topRatedMoviesLayoutMgr.childCount
+                val firstVisibleItem = topRatedMoviesLayoutMgr.findFirstVisibleItemPosition()
+
+                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
+                    topRatedMovies.removeOnScrollListener(this)
+                    topRatedMoviesPage++
+                    getTopRatedMovies()
+                }
+            }
+        })
+    }
+
+    private fun onTopRatedMoviesFetched(movies: List<Movie>) {
+        topRatedMoviesAdapter.appendMovies(movies)
+        attachTopRatedMoviesOnScrollListener()
     }
 
     private fun onError() {

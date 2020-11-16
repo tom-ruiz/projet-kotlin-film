@@ -13,6 +13,7 @@
             android:id="@+id/movie_backdrop"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/round_outline"
             app:layout_constraintBottom_toBottomOf="@+id/backdrop_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +33,7 @@
             <ImageView
                 android:id="@+id/movie_poster"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
 
         </androidx.cardview.widget.CardView>
 
