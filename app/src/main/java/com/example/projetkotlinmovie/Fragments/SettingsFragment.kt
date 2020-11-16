@@ -36,7 +36,7 @@ class SettingsFragment : Fragment() {
 
         val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(getString(R.string.choose_theme_text))
-        val styles = arrayOf("Light","Dark","Default")
+        val styles = arrayOf("Dark","Light","Default")
         val checkedItem = 0
 
 
@@ -44,12 +44,11 @@ class SettingsFragment : Fragment() {
 
             when (which) {
                 0 -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     dialog.dismiss()
                 }
                 1 -> {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     dialog.dismiss()
                 }
                 2 -> {
