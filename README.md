@@ -2,11 +2,11 @@
 
 ---------------------
 
- * Page d'accueil
+ ## Page d'accueil
  
- * Page d'informations du film
+ ## Page d'informations du film
  
- * Page de Favoris
+ ## Page de Favoris
  
- * Page de paramètres
+ ## Page de paramètres
    
